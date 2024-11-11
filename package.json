@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon server.js"
+    "devStart": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +13,8 @@
     "ejs": "^3.1.10",
     "express": "^4.21.1",
     "mongoose": "^8.8.1",
-    "nanoid": "^5.0.8"
+    "nanoid": "^5.0.8",
+    "shortid": "^2.2.16"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"

@@ -1,12 +1,10 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const ShortUrl = require('./models/shortUrl')
+
 const app = express()
 
 mongoose.connect('mongodb://localhost/urlShortener')
-//   useNewUrlParser: true,
-//    useUnifiedTopology: true,
-//})
 
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: false}))
@@ -15,23 +13,25 @@ app.use(express.urlencoded({ extended: false}))
 app.get('/', async (req, res) => {
    try {
       const shortUrls = await ShortUrl.find()
-      res.render('index', { ShortUrls: shortUrls})
+      res.render('index', { shortUrls})
    } catch (error) {
-      console.error(error)
-      res.sendStatus(500).send("Error retrieving URLs")
+      console.error('Error fetching URLs:', error)
+      res.render('index', { shortUrls: [] }); // Pass an empty array if there’s an error
    }
 })
 
 app.post('/shortUrls', async (req, res) => {
-    ShortUrl.create({full: req.body.fullUrl })
-   
+   const fullUrl = req.body.fullUrl
+ 
    try {
-      const shortUrl = nanoid(7)
-      await ShortUrl.create({ full: fullUrl, short: shortUrl })
-      res.redirect('/')
-   } catch (error) { 
-   } res.status(500).send("Error creating short URL")
-})
+     const shortUrl = nanoid(7)
+     await ShortUrl.create({ full: fullUrl, short: shortUrl })
+     res.redirect('/')
+   } catch (error) {
+     res.status(500).send("Error creating short URL")
+   }
+ })
+ 
 
 app.get('/shortUrl', async (req, res) => {
   try { const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl })
