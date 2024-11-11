@@ -1,14 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>Url Shortener</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Shortener</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <form action="/shortUrls" method="POST" class="my"></form>
+  <div class="container my-5">
+    <!-- Header -->
+    <h1 class="text-center mb-4">URL Shortener</h1>
+
+    <!-- URL Shortener Form -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <form action="/shortUrls" method="POST">
+          <div class="form-group">
+            <label for="fullUrl">Enter a URL to Shorten</label>
+            <input type="url" name="fullUrl" id="fullUrl" class="form-control" placeholder="https://example.com" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Shorten URL</button>
+        </form>
+      </div>
     </div>
-</body>
+
+    <!-- Shortened URLs Table -->
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Shortened URLs</h3>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Full URL</th>
+              <th>Short URL</th>
+              <th>Clicks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% shortUrls.forEach(shortUrl => { %>
+              <tr>
+                <td><a href="<%= shortUrl.full %>" target="_blank"><%= shortUrl.full %></a></td>
+                <td><a href="/<%= shortUrl.short %>" target="_blank">/<%= shortUrl.short %></a></td>
+                <td><%= shortUrl.clicks %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and Dependencies
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ --></body>
 </html>
